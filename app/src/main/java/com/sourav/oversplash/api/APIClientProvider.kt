@@ -7,32 +7,36 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class APIClientProvider: APICaller {
+    private val baseURL = "https://api.unsplash.com/"
 
-    companion object{
-        val baseURL = "https://api.unsplash.com/"
+//    fun get(clazz: Class<T>): T{
+//         val retrofit = Retrofit.Builder()
+//            .baseUrl(baseURL)
+//            .client(getOkHttpClient())
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        return retrofit.create(UnplashAPIService::class.java)
+//    }
 
-        @JvmStatic
-        fun get(): Retrofit{
-            return Retrofit.Builder()
-                .baseUrl(baseURL)
-                .client(getOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-        }
-
-        private fun getOkHttpClient(): OkHttpClient{
-            return OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(AuthInterceptor())
-                .build()
-        }
-
+    private fun getOkHttpClient(): OkHttpClient{
+        return OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(AuthInterceptor())
+            .build()
     }
 
-    override fun <T> doAPICall(result: Call<T>, responseHandler: ResponseHandler<T>) {
+    public override fun <T> doAPICall(result: Call<T>, responseHandler: ResponseHandler<T>) {
         result.enqueue(RetrofitResponseHandler(responseHandler))
+    }
+
+    override fun <T> getAPIClient(apiService: Class<T>):T {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseURL)
+            .client(getOkHttpClient())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        return retrofit.create(apiService)
     }
 
 }
