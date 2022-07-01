@@ -1,21 +1,24 @@
 package com.sourav.oversplash.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sourav.oversplash.Interfaces.AdapterOnClickListener
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.databinding.ActivityMainBinding
+import com.sourav.oversplash.utils.Constants
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterOnClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView;
     private lateinit var adapter: BasicAdapter;
-    private val imageViewModel : ImageViewModel by viewModels()
+    private val imageViewModel: ImageViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +33,8 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun initViewModels() {
         imageViewModel.getImageList()
-        imageViewModel.photoList.observe(this ){
-            adapter = BasicAdapter(it.toMutableList())
+        imageViewModel.photoList.observe(this) {
+            adapter = BasicAdapter(it.toMutableList(), this)
             recyclerView.adapter = adapter
         }
     }
@@ -45,6 +48,15 @@ class MainActivity : AppCompatActivity() {
                 orientation = LinearLayoutManager.VERTICAL
             }
         }
+    }
+
+    override fun onClick(url: String) {
+        startActivity(
+            Intent(this, PhotoViewActivity::class.java)
+                .apply {
+                    putExtra(Constants.IntentKey_PHOTO_URL, url)
+                }
+        )
     }
 
 }
