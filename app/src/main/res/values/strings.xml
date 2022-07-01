@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Oversplash</string>
+    <string name="bottom_feed">Feed</string>
+    <string name="bottom_category">Category</string>
 </resources>
