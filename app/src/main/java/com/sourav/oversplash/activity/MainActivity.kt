@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity(), AdapterOnClickListener {
 
     private fun initView() {
         recyclerView = binding.rvMain
+        binding.fab.setOnClickListener{
+            refreshData()
+        }
 
         recyclerView.apply {
             setHasFixedSize(true)
@@ -48,6 +51,10 @@ class MainActivity : AppCompatActivity(), AdapterOnClickListener {
                 orientation = LinearLayoutManager.VERTICAL
             }
         }
+    }
+
+    fun refreshData(){
+        imageViewModel.getImageList()
     }
 
     override fun onClick(url: String) {

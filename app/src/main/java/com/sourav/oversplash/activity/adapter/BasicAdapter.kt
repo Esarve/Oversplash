@@ -12,7 +12,7 @@ class BasicAdapter(private var photoList: MutableList<Photo>?, private var liste
 
     class ViewHolder(private val binding: BasicAdapterBinding, val listener: AdapterOnClickListener): RecyclerView.ViewHolder(binding.root){
         fun bind(photo: Photo){
-            GlideHelper.loadImage(binding.image,photo.urls.thumb)
+            GlideHelper.loadImage(binding.image, photo.urls.thumb, 10)
             binding.image.setOnClickListener { listener.onClick(photo.urls.full) }
         }
     }
