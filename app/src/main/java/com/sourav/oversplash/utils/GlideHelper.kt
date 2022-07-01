@@ -8,7 +8,7 @@ import com.sourav.oversplash.Oversplash
 class GlideHelper {
     companion object{
         fun loadImage(imageView: ImageView, url:String){
-            Glide.with(Oversplash.applicationContext())
+            Glide.with(Oversplash.instance)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(imageView)

@@ -1,11 +1,12 @@
 package com.sourav.oversplash.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sourav.oversplash.activity.adapter.BasicAdapter
-import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.ActivityMainBinding
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
@@ -26,14 +27,24 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initViewModels() {
-        imageViewModel.randomPhoto
+        imageViewModel.getImageList()
+        imageViewModel.photoList.observe(this ){
+            adapter = BasicAdapter(it.toMutableList())
+            recyclerView.adapter = adapter
+        }
     }
 
     private fun initView() {
         recyclerView = binding.rvMain
-        adapter = BasicAdapter(emptyList<Photo>())
-        recyclerView.adapter = adapter
+
+        recyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@MainActivity).apply {
+                orientation = LinearLayoutManager.VERTICAL
+            }
+        }
     }
 
 }
