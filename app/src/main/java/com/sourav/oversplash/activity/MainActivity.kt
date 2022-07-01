@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sourav.oversplash.Interfaces.AdapterOnClickListener
@@ -13,7 +12,7 @@ import com.sourav.oversplash.databinding.ActivityMainBinding
 import com.sourav.oversplash.utils.Constants
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
-class MainActivity : AppCompatActivity(), AdapterOnClickListener {
+class MainActivity : BaseActivity(), AdapterOnClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView;
