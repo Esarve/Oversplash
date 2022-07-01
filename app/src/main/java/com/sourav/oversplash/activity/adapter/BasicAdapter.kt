@@ -7,7 +7,7 @@ import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.BasicAdapterBinding
 import com.sourav.oversplash.utils.GlideHelper
 
-class BasicAdapter(private val photoList: List<Photo>?): RecyclerView.Adapter<BasicAdapter.ViewHolder>() {
+class BasicAdapter(private var photoList: MutableList<Photo>?): RecyclerView.Adapter<BasicAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: BasicAdapterBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(photo: Photo){
@@ -30,5 +30,10 @@ class BasicAdapter(private val photoList: List<Photo>?): RecyclerView.Adapter<Ba
 
     override fun getItemCount(): Int {
         return photoList?.size ?: 0
+    }
+
+    fun setData(data: List<Photo>){
+        photoList!!.addAll(data)
+        notifyDataSetChanged()
     }
 }
