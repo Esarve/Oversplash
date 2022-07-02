@@ -7,13 +7,18 @@ import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.repository.ImageApiRepository
 
 class ImageViewModel : ViewModel() {
+    private var page = 0
+    private var perPage = 10
     private val imageApiRepository: ImageApiRepository by lazy {
-        ImageApiRepository()
+        ImageApiRepository(perPage)
     }
 
     fun getRandomImage() = imageApiRepository.getRandomImages()
-    fun getImageList() = imageApiRepository.getImageList(null)
-
+    fun getImageList() = imageApiRepository.getImageList(page)
+    fun getNextPage() {
+        page++
+        getImageList()
+    }
     private val _randomPhotoLiveData by lazy {
         imageApiRepository.imageLiveData
     }

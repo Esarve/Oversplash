@@ -33,8 +33,8 @@ class MainActivity : BaseActivity(), AdapterOnClickListener {
     private fun initViewModels() {
         imageViewModel.getImageList()
         imageViewModel.photoList.observe(this) {
-            adapter = BasicAdapter(it.toMutableList(), this)
-            recyclerView.adapter = adapter
+            val photoList = it.toMutableList()
+            adapter.setData(photoList)
         }
     }
 
@@ -49,11 +49,26 @@ class MainActivity : BaseActivity(), AdapterOnClickListener {
             layoutManager = LinearLayoutManager(this@MainActivity).apply {
                 orientation = LinearLayoutManager.VERTICAL
             }
+            itemAnimator = null
+            addOnScrollListener(object: RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE){
+                        loadMoreData()
+                    }
+                }
+            })
         }
+        adapter = BasicAdapter(mutableListOf(), this)
+        recyclerView.adapter = adapter
     }
 
-    fun refreshData(){
-        imageViewModel.getImageList()
+    private fun loadMoreData() {
+        imageViewModel.getNextPage()
+    }
+
+    private fun refreshData(){
+
     }
 
     override fun onClick(url: String) {
