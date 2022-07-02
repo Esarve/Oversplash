@@ -4,34 +4,43 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sourav.oversplash.Interfaces.AdapterOnClickListener
+import com.sourav.oversplash.activity.viewholders.BasicViewHolder
+import com.sourav.oversplash.activity.viewholders.ProgressHolder
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.BasicAdapterBinding
-import com.sourav.oversplash.utils.GlideHelper
+import com.sourav.oversplash.databinding.ViewholderLoadingBinding
 
-class BasicAdapter(private var photoList: MutableList<Photo>?, private var listener: AdapterOnClickListener): RecyclerView.Adapter<BasicAdapter.ViewHolder>() {
+class BasicAdapter(private var photoList: MutableList<Photo>?, private var listener: AdapterOnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class ViewHolder(private val binding: BasicAdapterBinding, val listener: AdapterOnClickListener): RecyclerView.ViewHolder(binding.root){
-        fun bind(photo: Photo){
-            GlideHelper.loadImage(binding.image, photo.urls.thumb, 10)
-            binding.image.setOnClickListener { listener.onClick(photo.urls.full) }
-        }
+    private val DEFAULT: Int = 1
+    private val LOADING: Int = 0
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val basicViewHolder = BasicAdapterBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+        val loadingBinding = ViewholderLoadingBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+
+        return if (viewType == DEFAULT) BasicViewHolder(basicViewHolder, listener) else ProgressHolder(loadingBinding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemBinding = BasicAdapterBinding.inflate(LayoutInflater.from(parent.context),parent, false)
-        return ViewHolder(itemBinding, listener)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val photo = photoList?.get(position)
         photo?.let {
-            with(holder) { bind(photo = photo) }
+            if (holder is BasicViewHolder) {
+                with(holder){bind(photo = photo)}
+            }
         }
 
     }
 
     override fun getItemCount(): Int {
         return photoList?.size ?: 0
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when(position){
+            photoList!!.size-1 -> LOADING
+            else -> DEFAULT
+        }
     }
 
     fun setData(data: List<Photo>){

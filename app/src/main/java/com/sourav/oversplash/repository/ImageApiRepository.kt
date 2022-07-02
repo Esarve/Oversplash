@@ -6,7 +6,7 @@ import com.sourav.oversplash.api.ResponseHandler
 import com.sourav.oversplash.api.UnplashAPIService
 import com.sourav.oversplash.data.photo.Photo
 
-class ImageApiRepository {
+class ImageApiRepository(var perPage:Int) {
     private val apiCaller = APIClientProvider()
     private val _imageLiveData = MutableLiveData<Photo>()
     private val _imageListLiveData = MutableLiveData<List<Photo>>()
@@ -32,8 +32,8 @@ class ImageApiRepository {
         } )
     }
 
-    fun getImageList(map: Map<String, Int>?){
-        apiCaller.doAPICall(apiCaller.getAPIClient(UnplashAPIService::class.java).getPhotoList(map?: emptyMap()),object:ResponseHandler<List<Photo>>{
+    fun getImageList(page:Int){
+        apiCaller.doAPICall(apiCaller.getAPIClient(UnplashAPIService::class.java).getPhotoList(page,perPage),object:ResponseHandler<List<Photo>>{
             override fun onSuccess(data: List<Photo>) {
                 _imageListLiveData.value = data
             }
