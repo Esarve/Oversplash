@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.repository.ImageApiRepository
+import timber.log.Timber
 
 class ImageViewModel : ViewModel() {
-    private var page = 0
+    private var page = 1
     private var perPage = 10
     private val imageApiRepository: ImageApiRepository by lazy {
         ImageApiRepository(perPage)
@@ -17,6 +18,7 @@ class ImageViewModel : ViewModel() {
     fun getImageList() = imageApiRepository.getImageList(page)
     fun getNextPage() {
         page++
+        Timber.d("Getting more image with page: $page")
         getImageList()
     }
     private val _randomPhotoLiveData by lazy {
