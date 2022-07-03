@@ -16,7 +16,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/topicBG"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/Rounded"
             app:layout_constraintEnd_toEndOf="parent"
@@ -26,9 +26,10 @@
         <TextView
             android:id="@+id/tvTopicName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:fontFamily="@font/alata"
             android:paddingHorizontal="8dp"
+            android:gravity="center"
             android:background="@drawable/layout_round_bottom"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#E1E1E1"

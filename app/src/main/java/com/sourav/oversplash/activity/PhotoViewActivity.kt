@@ -129,4 +129,8 @@ class PhotoViewActivity : BaseActivity() {
     private val shareResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         //IDK what happens here
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 }
