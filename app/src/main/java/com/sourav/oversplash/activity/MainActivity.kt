@@ -1,18 +1,17 @@
 package com.sourav.oversplash.activity
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
-import com.sourav.oversplash.Interfaces.AdapterOnClickListener
+import com.sourav.oversplash.R
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.databinding.ActivityMainBinding
-import com.sourav.oversplash.utils.Constants
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
-class MainActivity : BaseActivity(), AdapterOnClickListener {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var recyclerView: RecyclerView;
@@ -24,60 +23,16 @@ class MainActivity : BaseActivity(), AdapterOnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initView()
-        initViewModels()
-
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun initViewModels() {
-        imageViewModel.getImageList()
-        imageViewModel.photoList.observe(this) {
-            val photoList = it.toMutableList()
-            adapter.setData(photoList)
-        }
-    }
-
-    private fun initView() {
-        recyclerView = binding.rvMain
-        binding.fab.setOnClickListener{
-            refreshData()
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        binding.bottomNavigation.let {
+            NavigationUI.setupWithNavController(it,navController)
         }
 
-        recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MainActivity).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-            itemAnimator = null
-            addOnScrollListener(object: RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (!recyclerView.canScrollVertically(1) && newState == RecyclerView.SCROLL_STATE_IDLE){
-                        loadMoreData()
-                    }
-                }
-            })
-        }
-        adapter = BasicAdapter(mutableListOf(), this)
-        recyclerView.adapter = adapter
     }
 
-    private fun loadMoreData() {
-        imageViewModel.getNextPage()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        val navigated = NavigationUI.onNavDestinationSelected(item, navController)
+        return navigated || super.onOptionsItemSelected(item)
     }
-
-    private fun refreshData(){
-
-    }
-
-    override fun onClick(url: String) {
-        startActivity(
-            Intent(this, PhotoViewActivity::class.java)
-                .apply {
-                    putExtra(Constants.IntentKey_PHOTO_URL, url)
-                }
-        )
-    }
-
 }
