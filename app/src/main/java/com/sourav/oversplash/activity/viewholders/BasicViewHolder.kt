@@ -8,7 +8,7 @@ import com.sourav.oversplash.utils.GlideHelper
 
 class BasicViewHolder (private val binding: BasicAdapterBinding, private val listener: AdapterOnClickListener): RecyclerView.ViewHolder(binding.root) {
     fun bind(photo: Photo){
-        GlideHelper.loadImage(binding.image, photo.urls.thumb, 10)
+        GlideHelper.loadImage(binding.image, photo.urls.small, 20)
         binding.image.setOnClickListener { listener.onClick(photo.urls.full) }
     }
 }
