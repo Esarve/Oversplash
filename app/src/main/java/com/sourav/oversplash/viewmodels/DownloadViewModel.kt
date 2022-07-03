@@ -9,13 +9,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.utils.Constants
+import com.sourav.oversplash.utils.DataWrapper
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.CompletableEmitter
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleEmitter
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.io.*
@@ -27,37 +30,44 @@ import java.net.URLConnection
 
 class DownloadViewModel(application: Application) : AndroidViewModel(application) {
 
-    val disposable: CompositeDisposable by lazy {
+    private val _downloadMLD: MutableLiveData<DataWrapper<Uri>> by lazy {
+        MutableLiveData<DataWrapper<Uri>>()
+    }
+
+    val downloadMLD: MutableLiveData<DataWrapper<Uri>>
+        get() = _downloadMLD
+
+    private val disposable: CompositeDisposable by lazy {
         CompositeDisposable()
     }
     fun downloadPhoto(photo: Photo){
+        _downloadMLD.value = DataWrapper.loading(null)
         disposable.add(
-            Completable.defer {
-                Completable.create { emitter: CompletableEmitter? ->
-                    downloadImage(emitter, photo)
-                }
+            Single.create { emitter: SingleEmitter<Uri>? ->
+                downloadImage(emitter,photo)
             }
-                .subscribeOn(Schedulers.computation())
-                .unsubscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    doOnSuccess()
-                }) { throwable ->
-                    doOnFailure()
-                    throwable.printStackTrace()
+                .doOnSuccess { uri: Uri? ->
+                   doOnSuccess(uri!!)
                 }
+                .doOnError { throwable: Throwable? ->
+                    doOnFailure()
+                }
+                .subscribe()
         )
     }
 
     private fun doOnFailure() {
-        TODO("Not yet implemented")
+        _downloadMLD.value = DataWrapper.failure(null)
     }
 
-    private fun doOnSuccess() {
-        TODO("Not yet implemented")
+    private fun doOnSuccess(uri: Uri) {
+        _downloadMLD.value  = DataWrapper.success(uri)
     }
 
-    private fun downloadImage(emitter: CompletableEmitter?,photo: Photo){
+    private fun downloadImage(emitter: SingleEmitter<Uri>?,photo: Photo){
         var inputStream: InputStream? = null
         val photoLink = photo.urls.full
         try {
@@ -79,16 +89,17 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
     }
 
     @Throws(IOException::class)
-    private fun saveImage(bitmap: Bitmap, name: String, emitter: CompletableEmitter?) {
+    private fun saveImage(bitmap: Bitmap, name: String, emitter: SingleEmitter<Uri>?) {
         var saved = false
         var fos: OutputStream? = null
+        val imageUri: Uri?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val resolver: ContentResolver = Oversplash.instance.contentResolver
             val contentValues = ContentValues()
             contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             contentValues.put(MediaStore.MediaColumns.MIME_TYPE, Constants.MIMETYPE_IMAGE)
             contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/${Constants.DOWNLOAD_FOLDER}")
-            val imageUri: Uri? =
+            imageUri=
                 resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             imageUri?.let {
                 fos = resolver.openOutputStream(imageUri)
@@ -103,17 +114,22 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
             }
             val image = File(imagesDir, "$name.png")
             fos = FileOutputStream(image)
+            imageUri = image.toUri()
         }
         fos?.let {
-            saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+            saved = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos)
             fos?.flush()
             fos?.close()
         }
 
         when (saved){
-            true -> emitter?.onComplete()
+            true -> emitter?.onSuccess(imageUri!!)
             else -> emitter?.onError(Throwable())
         }
+    }
 
+    override fun onCleared() {
+        disposable.dispose()
+        super.onCleared()
     }
 }

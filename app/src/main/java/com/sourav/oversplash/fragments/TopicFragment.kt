@@ -24,10 +24,6 @@ class TopicFragment : Fragment(), AdapterOnClickListener {
     private lateinit var adapter: TopicAdapter;
     private val topicViewModel: TopicViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
