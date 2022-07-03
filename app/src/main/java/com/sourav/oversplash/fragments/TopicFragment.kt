@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sourav.oversplash.Interfaces.AdapterOnClickListener
 import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.activity.adapter.TopicAdapter
+import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.FragmentFeedBinding
 import com.sourav.oversplash.viewmodels.TopicViewModel
 
@@ -56,7 +57,7 @@ class TopicFragment : Fragment(), AdapterOnClickListener {
         recyclerView.adapter = adapter
     }
 
-    override fun onClick(url: String) {
+    override fun onClick(photo: Photo) {
         TODO("Not yet implemented")
     }
 

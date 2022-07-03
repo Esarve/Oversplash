@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sourav.oversplash.Interfaces.AdapterOnClickListener
 import com.sourav.oversplash.activity.adapter.BasicAdapter
+import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.FragmentFeedBinding
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
@@ -21,10 +22,6 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
     private lateinit var recyclerView: RecyclerView;
     private lateinit var adapter: BasicAdapter;
     private val imageViewModel: ImageViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-            }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,8 +81,8 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
 
     }
 
-    override fun onClick(url: String) {
-        val action = FeedFragmentDirections.actionFeedFragmentToPhotoViewActivity(url)
+    override fun onClick(photo: Photo) {
+        val action = FeedFragmentDirections.actionFeedFragmentToPhotoViewActivity(photo)
         Navigation.findNavController(view!!).navigate(action)
 //        startActivity(
 //            Intent(this, PhotoViewActivity::class.java)

@@ -1,5 +1,7 @@
 package com.sourav.oversplash.data.photo
 
+import java.io.Serializable
+
 data class Exif(
     val aperture: String,
     val exposure_time: String,
@@ -7,4 +9,4 @@ data class Exif(
     val iso: Int,
     val make: String,
     val model: String
-)
+):Serializable

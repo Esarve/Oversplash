@@ -12,6 +12,6 @@ class BasicViewHolder (private val binding: BasicAdapterBinding, private val lis
     fun bind(photo: Photo){
         GlideHelper.loadImage(binding.image, photo.urls.small)
         binding.image.layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (120..250).random().toFloat(), Oversplash.instance.resources.displayMetrics).toInt()
-        binding.image.setOnClickListener { listener.onClick(photo.urls.full) }
+        binding.image.setOnClickListener { listener.onClick(photo) }
     }
 }

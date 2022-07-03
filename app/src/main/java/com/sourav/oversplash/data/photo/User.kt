@@ -1,5 +1,7 @@
 package com.sourav.oversplash.data.photo
 
+import java.io.Serializable
+
 data class User(
     val bio: String,
     val id: String,
@@ -14,4 +16,4 @@ data class User(
     val twitter_username: String,
     val updated_at: String,
     val username: String
-)
+):Serializable

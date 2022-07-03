@@ -24,7 +24,8 @@
         android:name="com.sourav.oversplash.activity.PhotoViewActivity"
         android:label="PhotoViewActivity" >
         <argument
-            android:name="link"
-            app:argType="string" />
+            android:name="photo"
+            app:argType="com.sourav.oversplash.data.photo.Photo"
+            app:nullable="true" />
     </activity>
 </navigation>
