@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Oversplash</string>
     <string name="bottom_feed">Feed</string>
-    <string name="bottom_category">Category</string>
+    <string name="bottom_category">Topics</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
