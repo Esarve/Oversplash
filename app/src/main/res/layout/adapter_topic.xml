@@ -13,11 +13,12 @@
         android:background="@drawable/layout_round"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/topicBG"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/Rounded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

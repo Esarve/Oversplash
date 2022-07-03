@@ -55,7 +55,7 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
         }
 
         recyclerView.apply {
-            setHasFixedSize(true)
+            setHasFixedSize(false)
 //            layoutManager = LinearLayoutManager(Oversplash.instance).apply {
 //                orientation = LinearLayoutManager.VERTICAL
 //            }

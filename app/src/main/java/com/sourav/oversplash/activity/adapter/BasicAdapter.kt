@@ -44,7 +44,8 @@ class BasicAdapter(private var photoList: MutableList<Photo>?, private var liste
     }
 
     fun setData(data: List<Photo>){
+        val start = photoList!!.size-1
         photoList!!.addAll(data)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(start,data.size)
     }
 }
