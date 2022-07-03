@@ -8,7 +8,7 @@ import com.sourav.oversplash.utils.GlideHelper
 
 class TopicViewHolder(private val binding: AdapterTopicBinding, private val listener: AdapterOnClickListener): RecyclerView.ViewHolder(binding.root) {
     fun bind(topic: Topic){
-        GlideHelper.loadImage(binding.topicBG,topic.cover_photo.urls.thumb,20)
+        GlideHelper.loadImage(binding.topicBG,topic.cover_photo.urls.thumb)
         binding.tvTopicName.text = topic.title
     }
 }

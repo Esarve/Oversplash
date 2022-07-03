@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sourav.oversplash.Interfaces.AdapterOnClickListener
-import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.databinding.FragmentFeedBinding
 import com.sourav.oversplash.viewmodels.ImageViewModel
@@ -57,8 +56,11 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
 
         recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(Oversplash.instance).apply {
-                orientation = LinearLayoutManager.VERTICAL
+//            layoutManager = LinearLayoutManager(Oversplash.instance).apply {
+//                orientation = LinearLayoutManager.VERTICAL
+//            }
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
             }
             itemAnimator = null
             addOnScrollListener(object: RecyclerView.OnScrollListener() {
