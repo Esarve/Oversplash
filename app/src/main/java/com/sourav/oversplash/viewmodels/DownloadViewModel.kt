@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.data.photo.Photo
+import com.sourav.oversplash.utils.Constants
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.CompletableEmitter
@@ -25,7 +26,6 @@ import java.net.URLConnection
 
 
 class DownloadViewModel(application: Application) : AndroidViewModel(application) {
-    private val IMAGES_FOLDER_NAME: String = "Oversplash"
 
     val disposable: CompositeDisposable by lazy {
         CompositeDisposable()
@@ -75,7 +75,7 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
         }
         val bmpimg = BitmapFactory.decodeStream(inputStream)
 
-        saveImage(bmpimg,"KUDDUS", emitter)
+        saveImage(bmpimg, photo.id, emitter)
     }
 
     @Throws(IOException::class)
@@ -86,8 +86,8 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
             val resolver: ContentResolver = Oversplash.instance.contentResolver
             val contentValues = ContentValues()
             contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
-            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/$IMAGES_FOLDER_NAME")
+            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, Constants.MIMETYPE_IMAGE)
+            contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/${Constants.DOWNLOAD_FOLDER}")
             val imageUri: Uri? =
                 resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
             imageUri?.let {
@@ -96,7 +96,7 @@ class DownloadViewModel(application: Application) : AndroidViewModel(application
         } else {
             val imagesDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM
-            ).toString() + File.separator + IMAGES_FOLDER_NAME
+            ).toString() + File.separator + Constants.DOWNLOAD_FOLDER
             val file = File(imagesDir)
             if (!file.exists()) {
                 file.mkdir()

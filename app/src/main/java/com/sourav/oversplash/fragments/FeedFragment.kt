@@ -1,10 +1,10 @@
 package com.sourav.oversplash.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
@@ -14,6 +14,7 @@ import com.sourav.oversplash.Interfaces.AdapterOnClickListener
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.FragmentFeedBinding
+import com.sourav.oversplash.utils.DataWrapper
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
 class FeedFragment : Fragment(), AdapterOnClickListener {
@@ -36,12 +37,23 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initViewModels() {
         imageViewModel.getImageList()
         imageViewModel.photoList.observe(viewLifecycleOwner) {
-            val photoList = it.toMutableList()
-            adapter.setData(photoList)
+            when(it.status){
+                DataWrapper.Status.SUCCESS -> {
+                    val photoList = it.data!!.toMutableList()
+                    adapter.setData(photoList)
+                }
+                DataWrapper.Status.ERROR -> {
+                    Toast.makeText(requireContext(), "Something Went Wrong with HTTP CODE ${it.errorCode}", Toast.LENGTH_SHORT).show()
+                }
+                DataWrapper.Status.LOADING ->{}
+                DataWrapper.Status.FAILURE -> {
+                    Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
     }
 
@@ -53,9 +65,7 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
 
         recyclerView.apply {
             setHasFixedSize(false)
-//            layoutManager = LinearLayoutManager(Oversplash.instance).apply {
-//                orientation = LinearLayoutManager.VERTICAL
-//            }
+
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL).apply {
                 gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
             }
@@ -84,11 +94,5 @@ class FeedFragment : Fragment(), AdapterOnClickListener {
     override fun onClick(photo: Photo) {
         val action = FeedFragmentDirections.actionFeedFragmentToPhotoViewActivity(photo)
         Navigation.findNavController(view!!).navigate(action)
-//        startActivity(
-//            Intent(this, PhotoViewActivity::class.java)
-//                .apply {
-//                    putExtra(Constants.IntentKey_PHOTO_URL, url)
-//                }
-//        )
     }
 }

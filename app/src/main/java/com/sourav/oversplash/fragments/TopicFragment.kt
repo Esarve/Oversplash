@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.activity.adapter.TopicAdapter
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.FragmentFeedBinding
+import com.sourav.oversplash.utils.DataWrapper
 import com.sourav.oversplash.viewmodels.TopicViewModel
 
 class TopicFragment : Fragment(), AdapterOnClickListener {
@@ -39,7 +41,18 @@ class TopicFragment : Fragment(), AdapterOnClickListener {
     private fun initData() {
         topicViewModel.getTopics()
         topicViewModel.topicLiveData.observe(viewLifecycleOwner) {
-            adapter.setData(it)
+            when(it.status){
+                DataWrapper.Status.SUCCESS -> {
+                    adapter.setData(it.data!!)
+                }
+                DataWrapper.Status.ERROR -> {
+                    Toast.makeText(requireContext(), "Something Went Wrong with HTTP CODE ${it.errorCode}", Toast.LENGTH_SHORT).show()
+                }
+                DataWrapper.Status.LOADING ->{}
+                DataWrapper.Status.FAILURE -> {
+                    Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

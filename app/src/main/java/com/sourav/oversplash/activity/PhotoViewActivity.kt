@@ -56,7 +56,7 @@ class PhotoViewActivity : BaseActivity() {
 
     private fun initView(photo: Photo) {
         binding.download.setOnClickListener{
-            downloadViewModl.downloadPhoto(photo.links.download)
+            downloadViewModl.downloadPhoto(photo)
         }
     }
 }
