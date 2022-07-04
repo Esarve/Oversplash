@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sourav.oversplash.Interfaces.FeedAdapterOnClickListener
 import com.sourav.oversplash.Oversplash
+import com.sourav.oversplash.R
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.data.TopicData
 import com.sourav.oversplash.data.photo.Photo
@@ -22,7 +23,7 @@ import com.sourav.oversplash.utils.Utils
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
 class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
-    // TODO: Rename and change types of parameters
+
     private val args: FeedFragmentArgs by navArgs()
     private lateinit var binding: FragmentFeedBinding
     private lateinit var recyclerView: RecyclerView;
@@ -35,7 +36,6 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentFeedBinding.inflate(inflater,container,false)
 
         initView(topic)
@@ -56,13 +56,13 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
                     adapter.setData(photoList)
                 }
                 DataWrapper.Status.ERROR -> {
-                    Toast.makeText(requireContext(), "Something Went Wrong with HTTP CODE ${it.errorCode}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.msg_something_went_wrong_http).plus(" ${it.errorCode}"), Toast.LENGTH_SHORT).show()
                 }
                 DataWrapper.Status.LOADING ->{}
                 DataWrapper.Status.FAILURE -> {
                     if (!Utils.isNetworkConnected(Oversplash.instance)){
-                        Toast.makeText(Oversplash.instance, "No internet connection found", Toast.LENGTH_SHORT).show()
-                    }else Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(Oversplash.instance, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+                    }else Toast.makeText(requireContext(), getString(R.string.msg_something_went_wrong), Toast.LENGTH_SHORT).show()
                 }
             }
 

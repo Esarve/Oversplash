@@ -55,7 +55,7 @@ class PhotoViewActivity : BaseActivity() {
                 target: Target<Drawable>?,
                 isFirstResource: Boolean
             ): Boolean {
-                Toast.makeText(this@PhotoViewActivity, "Failed To Load Image", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@PhotoViewActivity, getString(R.string.failed_load_img), Toast.LENGTH_SHORT).show()
                 return false
             }
 
@@ -81,7 +81,7 @@ class PhotoViewActivity : BaseActivity() {
                     if (isShare){
                         initShare(it.data!!)
                     }else{
-                        Toast.makeText(this, "Download Successful", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.dload_success), Toast.LENGTH_SHORT).show()
                     }
                 }
                 DataWrapper.Status.ERROR ,DataWrapper.Status.FAILURE -> {
@@ -115,7 +115,7 @@ class PhotoViewActivity : BaseActivity() {
             type = Constants.MIMETYPE_IMAGE
         }
 
-        val chooserTitle: String = "Share your screenshot!"
+        val chooserTitle: String = getString(R.string.share_photo)
         val chooser = Intent.createChooser(intent, chooserTitle)
         val resInfoList: List<ResolveInfo> = Oversplash.instance.packageManager.queryIntentActivities(chooser, PackageManager.MATCH_DEFAULT_ONLY)
         for (resolveInfo in resInfoList) {

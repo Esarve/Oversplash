@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sourav.oversplash.Interfaces.FeedAdapterOnClickListener
 import com.sourav.oversplash.Oversplash
+import com.sourav.oversplash.R
 import com.sourav.oversplash.activity.adapter.TopicAdapter
 import com.sourav.oversplash.data.TopicData
 import com.sourav.oversplash.data.topics.Topic
@@ -45,13 +46,13 @@ class TopicFragment : Fragment(), FeedAdapterOnClickListener<Topic> {
                     adapter.setData(it.data!!)
                 }
                 DataWrapper.Status.ERROR -> {
-                    Toast.makeText(requireContext(), "Something Went Wrong with HTTP CODE ${it.errorCode}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.msg_something_went_wrong_http).plus(" ${it.errorCode}"), Toast.LENGTH_SHORT).show()
                 }
                 DataWrapper.Status.LOADING ->{}
                 DataWrapper.Status.FAILURE -> {
                     if (!Utils.isNetworkConnected(Oversplash.instance)){
-                        Toast.makeText(Oversplash.instance, "No internet connection found", Toast.LENGTH_SHORT).show()
-                    }else Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(Oversplash.instance, getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
+                    }else Toast.makeText(requireContext(), getString(R.string.msg_something_went_wrong), Toast.LENGTH_SHORT).show()
                 }
             }
         }
