@@ -48,4 +48,10 @@ class BasicAdapter(private var photoList: MutableList<Photo>?, private var liste
         photoList!!.addAll(data)
         notifyItemRangeInserted(start,data.size)
     }
+
+    fun invalidate(){
+        val range = photoList!!.size
+        photoList!!.clear()
+        notifyItemRangeRemoved(0,range-1)
+    }
 }

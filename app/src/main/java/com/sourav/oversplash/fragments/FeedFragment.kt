@@ -12,11 +12,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sourav.oversplash.Interfaces.FeedAdapterOnClickListener
+import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.data.TopicData
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.FragmentFeedBinding
 import com.sourav.oversplash.utils.DataWrapper
+import com.sourav.oversplash.utils.Utils
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
 class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
@@ -26,19 +28,15 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
     private lateinit var recyclerView: RecyclerView;
     private lateinit var adapter: BasicAdapter;
     private val imageViewModel: ImageViewModel by viewModels()
-
+    private val topic: TopicData? by lazy {
+        args.topic
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentFeedBinding.inflate(inflater,container,false)
-        var topic: TopicData? = null
-        try {
-            topic = args.topic
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
 
         initView(topic)
         initViewModels(topic)
@@ -62,7 +60,9 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
                 }
                 DataWrapper.Status.LOADING ->{}
                 DataWrapper.Status.FAILURE -> {
-                    Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                    if (!Utils.isNetworkConnected(Oversplash.instance)){
+                        Toast.makeText(Oversplash.instance, "No internet connection found", Toast.LENGTH_SHORT).show()
+                    }else Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -100,6 +100,10 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
         }
         adapter = BasicAdapter(mutableListOf(), this)
         recyclerView.adapter = adapter
+
+        binding.fab.setOnClickListener{
+            refreshData()
+        }
     }
 
     private fun loadMoreData(topic: TopicData?) {
@@ -110,7 +114,10 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
     }
 
     private fun refreshData(){
-
+        when (topic) {
+            null -> imageViewModel.getImageList()
+            else -> imageViewModel.getImageListByTopic(topic!!.topicID)
+        }
     }
 
     override fun onClick(photo: Photo) {

@@ -17,6 +17,7 @@ import com.sourav.oversplash.data.TopicData
 import com.sourav.oversplash.data.topics.Topic
 import com.sourav.oversplash.databinding.FragmentTopicBinding
 import com.sourav.oversplash.utils.DataWrapper
+import com.sourav.oversplash.utils.Utils
 import com.sourav.oversplash.viewmodels.TopicViewModel
 
 class TopicFragment : Fragment(), FeedAdapterOnClickListener<Topic> {
@@ -48,7 +49,9 @@ class TopicFragment : Fragment(), FeedAdapterOnClickListener<Topic> {
                 }
                 DataWrapper.Status.LOADING ->{}
                 DataWrapper.Status.FAILURE -> {
-                    Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
+                    if (!Utils.isNetworkConnected(Oversplash.instance)){
+                        Toast.makeText(Oversplash.instance, "No internet connection found", Toast.LENGTH_SHORT).show()
+                    }else Toast.makeText(requireContext(), "Something Went Wrong", Toast.LENGTH_SHORT).show()
                 }
             }
         }
