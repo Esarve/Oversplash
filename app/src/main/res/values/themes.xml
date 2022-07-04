@@ -16,8 +16,8 @@
     </style>
 
     <style name="MainTheme" parent="Theme.Oversplash">
-        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/white</item>
-        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@mipmap/ic_launcher_round</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/app_icon_bg</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/ic_splash_adobe_express</item>
 
 
     </style>
