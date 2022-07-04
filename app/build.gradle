@@ -31,6 +31,21 @@ android {
         }
     }
 
+    flavorDimensions "IDK"
+    productFlavors {
+        demo {
+            buildConfigField("String", "SECRET_KEY", "\"oU6AuRq2GQg83dsXPdIKCE1dNXF5AA3YifRD7prn22M\"")
+            buildConfigField("String", "ACCESS_KEY", "\"QQKko1tMpPGcKo1eRD3rbW2BCfffR4GnEiZauTDtnUU\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.unsplash.com/\"")
+        }
+
+        production {
+            buildConfigField("String", "SECRET_KEY", "")
+            buildConfigField("String", "ACCESS_KEY", "")
+            buildConfigField("String", "BASE_URL", "\"https://api.unsplash.com/\"")
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11

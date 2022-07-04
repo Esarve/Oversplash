@@ -1,5 +1,6 @@
 package com.sourav.oversplash.api
 
+import com.sourav.oversplash.BuildConfig
 import com.sourav.oversplash.Oversplash
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -10,7 +11,7 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 class APIClientProvider: APICaller {
-    private val baseURL = "https://api.unsplash.com/"
+    private val baseURL = BuildConfig.BASE_URL
 
 //    fun get(clazz: Class<T>): T{
 //         val retrofit = Retrofit.Builder()
