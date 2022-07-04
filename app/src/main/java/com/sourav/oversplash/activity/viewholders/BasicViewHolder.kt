@@ -8,7 +8,7 @@ import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.BasicAdapterBinding
 import com.sourav.oversplash.utils.GlideHelper
 
-class BasicViewHolder (private val binding: BasicAdapterBinding, private val listener: FeedAdapterOnClickListener): RecyclerView.ViewHolder(binding.root) {
+class BasicViewHolder (private val binding: BasicAdapterBinding, private val listener: FeedAdapterOnClickListener<Photo>): RecyclerView.ViewHolder(binding.root) {
     fun bind(photo: Photo){
         GlideHelper.loadImage(binding.image, photo.urls.small)
         binding.image.layoutParams.height = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (120..250).random().toFloat(), Oversplash.instance.resources.displayMetrics).toInt()

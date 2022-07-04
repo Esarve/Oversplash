@@ -51,4 +51,21 @@ class ImageApiRepository(var perPage:Int) {
         })
     }
 
+    fun getImageListByTopic(id:String, page:Int){
+        apiCaller.doAPICall(apiCaller.getAPIClient(UnplashAPIService::class.java).getTopicPhotos(id,page,perPage),object:ResponseHandler<List<Photo>>{
+            override fun onSuccess(data: List<Photo>) {
+                _imageListLiveData.value = DataWrapper.success(data)
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                _imageListLiveData.value = DataWrapper.failure(null);
+            }
+
+            override fun onError(httpCode: Int) {
+                _imageListLiveData.value = DataWrapper.errorWithCode(Constants.ERROR,null,httpCode)
+            }
+
+        })
+    }
+
 }

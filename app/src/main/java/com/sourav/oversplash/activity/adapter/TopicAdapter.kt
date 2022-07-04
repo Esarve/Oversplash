@@ -8,7 +8,7 @@ import com.sourav.oversplash.activity.viewholders.TopicViewHolder
 import com.sourav.oversplash.data.topics.Topic
 import com.sourav.oversplash.databinding.AdapterTopicBinding
 
-class TopicAdapter (private var topicList: MutableList<Topic>?, private var listener: FeedAdapterOnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TopicAdapter (private var topicList: MutableList<Topic>?, private var listener: FeedAdapterOnClickListener<Topic>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val topicViewHolder = AdapterTopicBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return TopicViewHolder(topicViewHolder, listener)

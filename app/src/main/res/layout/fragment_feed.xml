@@ -12,6 +12,26 @@
         android:layout_height="match_parent"
         tools:context=".FeedFragment">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/topic"
+            android:layout_width="match_parent"
+            android:paddingHorizontal="8dp"
+            android:paddingTop="4dp"
+            android:layout_height="50dp"
+            android:fontFamily="@font/alata"
+            android:lineSpacingExtra="8sp"
+            android:gravity="center_vertical"
+            android:background="@drawable/layout_round_bottom"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#3E3E3E"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMain"
             android:layout_width="match_parent"
@@ -19,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/topic" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
