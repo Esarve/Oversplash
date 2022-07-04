@@ -15,6 +15,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="MainTheme" parent="Theme.Oversplash">
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/white</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@mipmap/ic_launcher_round</item>
+
+    </style>
+
     <style name="PhotoViewerTheme" parent="Theme.Oversplash">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
