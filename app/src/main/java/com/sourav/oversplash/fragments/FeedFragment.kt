@@ -10,14 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.sourav.oversplash.Interfaces.AdapterOnClickListener
+import com.sourav.oversplash.Interfaces.FeedAdapterOnClickListener
 import com.sourav.oversplash.activity.adapter.BasicAdapter
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.FragmentFeedBinding
 import com.sourav.oversplash.utils.DataWrapper
 import com.sourav.oversplash.viewmodels.ImageViewModel
 
-class FeedFragment : Fragment(), AdapterOnClickListener {
+class FeedFragment : Fragment(), FeedAdapterOnClickListener {
     // TODO: Rename and change types of parameters
     private lateinit var binding: FragmentFeedBinding
     private lateinit var recyclerView: RecyclerView;

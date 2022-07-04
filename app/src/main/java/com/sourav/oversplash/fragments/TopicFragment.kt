@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sourav.oversplash.Interfaces.AdapterOnClickListener
+import com.sourav.oversplash.Interfaces.FeedAdapterOnClickListener
 import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.activity.adapter.TopicAdapter
 import com.sourav.oversplash.data.photo.Photo
@@ -17,7 +17,7 @@ import com.sourav.oversplash.databinding.FragmentFeedBinding
 import com.sourav.oversplash.utils.DataWrapper
 import com.sourav.oversplash.viewmodels.TopicViewModel
 
-class TopicFragment : Fragment(), AdapterOnClickListener {
+class TopicFragment : Fragment(), FeedAdapterOnClickListener {
 
     private lateinit var binding: FragmentFeedBinding
     private lateinit var recyclerView: RecyclerView;
@@ -67,7 +67,7 @@ class TopicFragment : Fragment(), AdapterOnClickListener {
     }
 
     override fun onClick(photo: Photo) {
-        TODO("Not yet implemented")
+
     }
 
 }

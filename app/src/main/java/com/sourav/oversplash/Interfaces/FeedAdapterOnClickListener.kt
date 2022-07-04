@@ -2,6 +2,6 @@ package com.sourav.oversplash.Interfaces
 
 import com.sourav.oversplash.data.photo.Photo
 
-interface AdapterOnClickListener {
+interface FeedAdapterOnClickListener {
     fun onClick(photo: Photo)
 }

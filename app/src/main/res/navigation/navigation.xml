@@ -18,7 +18,11 @@
         android:id="@+id/dest_topic"
         android:name="com.sourav.oversplash.fragments.TopicFragment"
         android:label="fragment_topic"
-        tools:layout="@layout/fragment_topic" />
+        tools:layout="@layout/fragment_topic" >
+        <action
+            android:id="@+id/action_dest_topic_to_topicFeedFragment"
+            app:destination="@id/topicFeedFragment" />
+    </fragment>
     <activity
         android:id="@+id/photoViewActivity"
         android:name="com.sourav.oversplash.activity.PhotoViewActivity"
@@ -28,4 +32,13 @@
             app:argType="com.sourav.oversplash.data.photo.Photo"
             app:nullable="true" />
     </activity>
+    <fragment
+        android:id="@+id/topicFeedFragment"
+        android:name="com.sourav.oversplash.TopicFeedFragment"
+        android:label="fragment_topic_feed"
+        tools:layout="@layout/fragment_topic_feed" >
+        <argument
+            android:name="Topic"
+            app:argType="string" />
+    </fragment>
 </navigation>

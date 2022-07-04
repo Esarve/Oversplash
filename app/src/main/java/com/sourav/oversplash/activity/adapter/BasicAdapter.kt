@@ -3,14 +3,14 @@ package com.sourav.oversplash.activity.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sourav.oversplash.Interfaces.AdapterOnClickListener
+import com.sourav.oversplash.Interfaces.FeedAdapterOnClickListener
 import com.sourav.oversplash.activity.viewholders.BasicViewHolder
 import com.sourav.oversplash.activity.viewholders.ProgressHolder
 import com.sourav.oversplash.data.photo.Photo
 import com.sourav.oversplash.databinding.BasicAdapterBinding
 import com.sourav.oversplash.databinding.ViewholderLoadingBinding
 
-class BasicAdapter(private var photoList: MutableList<Photo>?, private var listener: AdapterOnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BasicAdapter(private var photoList: MutableList<Photo>?, private var listener: FeedAdapterOnClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val DEFAULT: Int = 1
     private val LOADING: Int = 0
