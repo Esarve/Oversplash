@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="font_title">#202020</color>
+    <color name="headerBG">#D3D3D3</color>
+    <color name="font_regular">#2C2C2C</color>
 </resources>

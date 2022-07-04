@@ -15,13 +15,13 @@ import com.sourav.oversplash.Oversplash
 import com.sourav.oversplash.activity.adapter.TopicAdapter
 import com.sourav.oversplash.data.TopicData
 import com.sourav.oversplash.data.topics.Topic
-import com.sourav.oversplash.databinding.FragmentFeedBinding
+import com.sourav.oversplash.databinding.FragmentTopicBinding
 import com.sourav.oversplash.utils.DataWrapper
 import com.sourav.oversplash.viewmodels.TopicViewModel
 
 class TopicFragment : Fragment(), FeedAdapterOnClickListener<Topic> {
 
-    private lateinit var binding: FragmentFeedBinding
+    private lateinit var binding: FragmentTopicBinding
     private lateinit var recyclerView: RecyclerView;
     private lateinit var adapter: TopicAdapter;
     private val topicViewModel: TopicViewModel by viewModels()
@@ -30,7 +30,7 @@ class TopicFragment : Fragment(), FeedAdapterOnClickListener<Topic> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFeedBinding.inflate(inflater,container,false)
+        binding = FragmentTopicBinding.inflate(inflater,container,false)
         initView()
         initData()
         return binding.root
@@ -55,7 +55,7 @@ class TopicFragment : Fragment(), FeedAdapterOnClickListener<Topic> {
     }
 
     private fun initView() {
-        recyclerView = binding.rvMain
+        recyclerView = binding.rvTopic
 
         recyclerView.apply {
             setHasFixedSize(true)

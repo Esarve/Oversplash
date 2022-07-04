@@ -36,7 +36,6 @@ class FeedFragment : Fragment(), FeedAdapterOnClickListener<Photo> {
         var topic: TopicData? = null
         try {
             topic = args.topic
-            Toast.makeText(requireContext(), "Current Topic $topic", Toast.LENGTH_SHORT).show()
         }catch (e: Exception){
             e.printStackTrace()
         }
