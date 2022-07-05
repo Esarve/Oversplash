@@ -29,7 +29,7 @@
 
 **Architecture:** MVVM
 
-**Library:** Retrofit, Glide, <a href="https://github.com/Baseflow/PhotoView" >Photo Viewer</a>, RxJava, RxAndroid, Navigation Components, Timber
+**Library:** Retrofit, Glide, <a href="https://github.com/Baseflow/PhotoView" >Photo Viewer</a>, RxJava, RxAndroid, Navigation Components, Android Data & View Binding, Timber
 
 ## Screenshots
 
