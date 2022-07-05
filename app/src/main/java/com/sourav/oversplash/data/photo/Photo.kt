@@ -1,5 +1,7 @@
 package com.sourav.oversplash.data.photo
 
+import java.io.Serializable
+
 data class Photo(
     val blur_hash: String,
     val color: String,
@@ -18,4 +20,4 @@ data class Photo(
     val urls: Urls,
     val user: User,
     val width: Int
-)
+):Serializable

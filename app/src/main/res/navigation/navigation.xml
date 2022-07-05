@@ -13,18 +13,30 @@
         <action
             android:id="@+id/action_feedFragment_to_photoViewActivity"
             app:destination="@id/photoViewActivity" />
+        <argument
+            android:name="topic"
+            app:argType="com.sourav.oversplash.data.TopicData"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/dest_topic"
         android:name="com.sourav.oversplash.fragments.TopicFragment"
         android:label="fragment_topic"
-        tools:layout="@layout/fragment_topic" />
+        tools:layout="@layout/fragment_topic" >
+        <action
+            android:id="@+id/action_dest_topic_to_dest_feed"
+            app:destination="@id/dest_feed"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
+    </fragment>
     <activity
         android:id="@+id/photoViewActivity"
         android:name="com.sourav.oversplash.activity.PhotoViewActivity"
         android:label="PhotoViewActivity" >
         <argument
-            android:name="link"
-            app:argType="string" />
+            android:name="photo"
+            app:argType="com.sourav.oversplash.data.photo.Photo"
+            app:nullable="true" />
     </activity>
 </navigation>

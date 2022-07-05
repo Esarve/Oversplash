@@ -11,11 +11,11 @@ class RetrofitResponseHandler<T>(val handler: ResponseHandler<T>): Callback<T> {
         if (response.isSuccessful){
             response.body()?.let { handler.onSuccess(it) };
         }else{
-            handler.onError()
+            handler.onError(response.code())
         }
     }
 
     override fun onFailure(call: Call<T>, t: Throwable) {
-        handler.onError()
+        handler.onFailure(t)
     }
 }

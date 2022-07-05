@@ -1,13 +1,17 @@
 package com.sourav.oversplash.api
 
+import com.sourav.oversplash.BuildConfig
+import com.sourav.oversplash.Oversplash
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 class APIClientProvider: APICaller {
-    private val baseURL = "https://api.unsplash.com/"
+    private val baseURL = BuildConfig.BASE_URL
 
 //    fun get(clazz: Class<T>): T{
 //         val retrofit = Retrofit.Builder()
@@ -19,9 +23,15 @@ class APIClientProvider: APICaller {
 //    }
 
     private fun getOkHttpClient(): OkHttpClient{
+
+        val httpCacheDirectory = File(Oversplash.instance.cacheDir, "responses")
+        val cacheSize = 10 * 1024 * 1024 // 10 MiB
+        val cache = Cache(httpCacheDirectory, cacheSize.toLong())
+
         return OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .cache(cache)
             .addInterceptor(AuthInterceptor())
             .build()
     }

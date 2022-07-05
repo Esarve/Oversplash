@@ -4,6 +4,7 @@
     package="com.sourav.oversplash">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".Oversplash"
@@ -22,6 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/MainTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
