@@ -78,6 +78,7 @@ class PhotoViewActivity : BaseActivity() {
             when (it.status) {
                 DataWrapper.Status.SUCCESS -> {
                     alertDialog.hide()
+                    alertDialog.dismiss()
                     if (isShare){
                         initShare(it.data!!)
                     }else{
@@ -86,6 +87,7 @@ class PhotoViewActivity : BaseActivity() {
                 }
                 DataWrapper.Status.ERROR ,DataWrapper.Status.FAILURE -> {
                     alertDialog.hide()
+                    alertDialog.dismiss()
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 }
                 DataWrapper.Status.LOADING -> {
