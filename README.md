@@ -11,7 +11,7 @@
 
 ## Features
 
-- Beautiful Material 3 inspired Design (Works with Android 12)
+- Beautiful Material 3 inspired Design (Works with Android 12+)
 - Automatic Light/Dark mode
 - Unsplash photo Feed
 - Unsplash Topic/Catergory support
